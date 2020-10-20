@@ -1,173 +1,70 @@
 <template>
   <div>
-    <div class="head">
-        <div class="head-one">
-            <img :src="logo" alt="" class="head-one-img">
-            <span>办公系统</span>
-        </div>
-        <div class="head-two">
-            <img :src="fangzi" alt="" class="head-two-fangzi">
-            <input type="text" placeholder="请输入你要搜索的内容...">
-            <button>搜索</button>
-        </div>
-        <div class="head-three">
-
-        </div>
-        <div class="head-four" v-for="item in departmentList" :key="item">
-            <div class="head-four-welcome">欢迎您，（{{item.department}}）{{item.name}}</div>
-            <div>
-                <img :src="set" alt="">
-            </div>
-            <div>
-                <img :src="exit" alt="">
-            </div>
-        </div>
+    <div id="center">
+      <el-button type="text" @click="open">点击打开 Message Box</el-button>
+      <a href="">登录</a>
     </div>
-
-
-
-    <div class="body">
-        <div class="body-left">
-            <div class="body-left-one">
-                <div class="body-left-one-left">
-                    <img :src="touxiang" alt="">
-                </div>
-                <div class="body-left-one-right" v-for="item in departmentList" :key="item">
-                    <div class="body-left-one-right-up">{{item.name}}</div>
-                    <div class="body-left-one-right-down">{{item.englishName}}</div>
-                </div>
-            </div>
-            <div class="body-left-two" v-for="item in departmentList" :key="item">
-                <div class="body-left-two-left">
-                    <div>职务(Duties) :</div>
-                    <div>{{item.duties}}</div>
-                </div>
-                <div class="body-left-two-right">
-                    <div>部门(Department) :</div>
-                    <div>{{item.department}}</div>
-                </div>
-            </div>
-            <div class="body-left-three" v-for="(item,index) in tabList" :key="index">
-                <div>
-                    <img :src="item.url" alt />
-                    {{item.name}}
-                </div>
-            </div>
-            <div class="body-left-four"></div>
-        </div>
-        <div class="body-right"></div>
+    <div id="bottom">
+      <span class="mane">宁波优城悦邻商业运营管理有限责任公司</span>
+      <span class="bah">浙ICP备20010478号</span><br />
+      <span class="address"
+        >地址浙江省宁波市鄞州区中山东路2622号甬江人才创新中心1号楼19层</span
+      >
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    name:'test',
-    components:{},
-    data(){
-        return{
-            logo:require('@/assets/image/logo.png'),
-            fangzi:require('@/assets/image/fangzi.png'),
-            set:require('@/assets/image/shezhi.png'),
-            exit:require('@/assets/image/tuichu.png'),
-            touxiang:require('@/assets/image/touxiang.jpg'),
-            departmentList:this.getDepartmentList(),
-            // tabList:this.getTabList(),
-        }
-    },
-    methods:{
-        getDepartmentList(){
-            return[
-                {
-                    id:1,
-                    name:'张丽娜',
-                    englishName:'Zhang Lina',
-                    duties:'平面设计',
-                    department:'综合管理部'
-                }
-            ]
+  name: "test",
+  components: {},
+  data() {
+    return {};
+  },
+  methods: {
+    open() {
+      const h = this.$createElement;
+      this.$msgbox({
+        title: "消息",
+        message: h("p", null, [
+          h("span", null, "内容可以是 "),
+          h("i", { style: "color: teal" }, "VNode"),
+        ]),
+        showCancelButton: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        beforeClose: (action, instance, done) => {
+          if (action === "confirm") {
+            instance.confirmButtonLoading = true;
+            instance.confirmButtonText = "执行中...";
+            setTimeout(() => {
+              done();
+              setTimeout(() => {
+                instance.confirmButtonLoading = false;
+              }, 300);
+            }, 3000);
+          } else {
+            done();
+          }
         },
-        getTabList(){
-            return[
-                {
-                    id:1,
-                    url:relquire('@/assets/image/icon1.png'),
-                    name:'个人中心',
-                },
-            ]
-        }
-    }
-}
+      }).then((action) => {
+        this.$message({
+          type: "info",
+          message: "action: " + action,
+        });
+      });
+    },
+  },
+};
 </script>
 
 <style lang="less">
-.head{
-    padding: 0 10% 0 10%;
-    // background-color: skyblue;
-    // width: 80%;
-    margin: 0 auto 0 auto;
-    display: flex;
-    justify-content: space-around;
-    &-one{
-        font-size: 25px;
-        margin: 20px 0 0 0;
-        &-img{
-            transform: translate(0,10px);
-        }
-    }
-    &-two{
-        margin: 20px 0 0 0;
-        &-fangzi{
-            transform: translate(0,10px);
-        }
-    }
-    &-three{
-        width: 17%;
-    }
-    &-four{
-        display: flex;
-        &-welcome{
-        margin: 30px 0 0 0;
-        }
-    }
+#bottom {
+  font-size: 10px;
+  width: 100%;
+  height: 50px;
+  // background-color: #666666;
+  text-align: center;
+  line-height: 25px;
 }
-.body{
-    padding: 20px 10% 20px 10%;
-    background-color: skyblue;
-    width: 350px;
-    &-left{
-        border-radius: 10px;
-        background-color: white;
-        &-one{
-            display: flex;
-            justify-content: center;
-            padding: 20px 0 20px 0;
-            &-right{
-                margin:25px 0 0 15px;
-                &-down{
-                    color: gray;
-                }
-            }
-        }
-        &-two{
-            display: flex;
-            justify-content: space-between;
-            text-align: center;
-            line-height: 30px;
-            &-left{
-                border: 1px solid rgb(235, 230, 230);
-                padding: 10px 0 10px 0;
-                width: 49%;
-                height: 60px;
-            }
-            &-right{
-                border: 1px solid rgb(235, 230, 230);
-                width: 49%;
-                padding: 10px 0 10px 0;
-                height: 60px;
-            }
-        }
-    }
-}
-
 </style>
