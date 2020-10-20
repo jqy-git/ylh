@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div id="center">
-      <el-button type="text" @click="open">点击打开 Message Box</el-button>
-      <a href="">登录</a>
-    </div>
+    <span @click="sign">注册</span>
     <div id="bottom">
       <span class="mane">宁波优城悦邻商业运营管理有限责任公司</span>
       <span class="bah">浙ICP备20010478号</span><br />
@@ -22,39 +19,12 @@ export default {
     return {};
   },
   methods: {
-    open() {
-      const h = this.$createElement;
-      this.$msgbox({
-        title: "消息",
-        message: h("p", null, [
-          h("span", null, "内容可以是 "),
-          h("i", { style: "color: teal" }, "VNode"),
-        ]),
-        showCancelButton: true,
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        beforeClose: (action, instance, done) => {
-          if (action === "confirm") {
-            instance.confirmButtonLoading = true;
-            instance.confirmButtonText = "执行中...";
-            setTimeout(() => {
-              done();
-              setTimeout(() => {
-                instance.confirmButtonLoading = false;
-              }, 300);
-            }, 3000);
-          } else {
-            done();
-          }
-        },
-      }).then((action) => {
-        this.$message({
-          type: "info",
-          message: "action: " + action,
-        });
-      });
-    },
-  },
+      sign(){
+          this.$router.push({
+              path:"/register"
+          })
+      }
+  }
 };
 </script>
 

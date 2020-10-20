@@ -11,6 +11,12 @@ export default new Router({
       name: 'HelloWorld',
       component: ()=>
         import('../containers/home')
+    },
+    {
+      path: '/register',
+      name: 'reg',
+      component: ()=>
+        import('../containers/register')
     }
   ]
 })
